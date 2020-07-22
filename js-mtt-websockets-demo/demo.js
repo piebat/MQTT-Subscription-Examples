@@ -19,7 +19,7 @@ function startConnect() {
     client.onMessageArrived = onMessageArrived;
 
     // Connect the client, if successful, call onConnect function
-    client.connect({ 
+    client.connect({
         onSuccess: onConnect,
     });
 }
@@ -47,7 +47,9 @@ function onConnectionLost(responseObject) {
 // Called when a message arrives
 function onMessageArrived(message) {
     console.log("onMessageArrived: " + message.payloadString);
-    document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '  | ' + message.payloadString + '</span><br/>';
+    // document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '  | ' + message.payloadString + '</span><br/>';
+    var mess = JSON.parse(message.payloadString);
+    document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '  () ' + mess[1].timestamp + ') | ' + mess[0].mac + '->' + mess[2].mac +'</span><br/>';
     updateScroll(); // Scroll to bottom of window
 }
 
