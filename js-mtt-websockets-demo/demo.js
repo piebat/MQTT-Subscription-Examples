@@ -48,8 +48,9 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
     console.log("onMessageArrived: " + message.payloadString);
     // document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '  | ' + message.payloadString + '</span><br/>';
+    document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '</span><br>'
     var mess = JSON.parse(message.payloadString);
-    document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '  () ' + mess[1].timestamp + ') | ' + mess[0].mac + '->' + mess[2].mac +'</span><br/>';
+    mess.forEach(MessageParsing);
     updateScroll(); // Scroll to bottom of window
 }
 
@@ -65,3 +66,11 @@ function updateScroll() {
     var element = document.getElementById("messages");
     element.scrollTop = element.scrollHeight;
 }
+
+function MessageParsing(mess, i) {
+        if (i == 0) {
+            document.getElementById("messages").innerHTML += '<span>Position ' + mess.mac +'</span><br/>';
+        } else {
+            document.getElementById("messages").innerHTML += '<span> (' + mess.timestamp + ') ' +  mess.mac + '</span><br>';
+        }
+    }
